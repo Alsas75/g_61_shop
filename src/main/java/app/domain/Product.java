@@ -9,6 +9,17 @@ public class Product {
     private double price;
     private boolean active;
 
+    //пустой конструктор необходим фреймворку jackson
+    public Product() {
+    }
+
+    public Product(int id, String title, double price, boolean active) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.active = active;
+    }
+
     public int getId() {
         return id;
     }
@@ -55,7 +66,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("Продукт: ид - %d, наименование - %s, цена - %.2f, активен - %b",
+        return String.format("Продукт: ид - %d, наименование - %s, цена - %.2f, активен - %b.",
                 id, title, price, active);
     }
 }
