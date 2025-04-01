@@ -9,7 +9,7 @@ public class Customer {
     private int id;
     private String name;
     private boolean active;
-    private final List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -37,6 +37,10 @@ public class Customer {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     @Override

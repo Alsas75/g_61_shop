@@ -50,7 +50,7 @@ public class ProductController {
 
     //    Восстановить удалённый продукт в базе данных по его идентификатору.
     public void restoreById(int id) throws IOException, ProductNotFoundException {
-        service.restoreById();
+        service.restoreById(id);
     }
 
     //    Вернуть общее количество продуктов в базе данных (активных).
