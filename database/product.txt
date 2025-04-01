@@ -8,4 +8,14 @@
   "title" : "Банан",
   "price" : 120.0,
   "active" : true
+}, {
+  "id" : 3,
+  "title" : "Апельсин",
+  "price" : 350.0,
+  "active" : true
+}, {
+  "id" : 4,
+  "title" : "Лимон",
+  "price" : 130.0,
+  "active" : false
 } ]

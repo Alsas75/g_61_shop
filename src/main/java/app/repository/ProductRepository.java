@@ -69,12 +69,16 @@ public class ProductRepository {
     public void update(Product product) throws IOException {
         int id = product.getId();
         double newPrice = product.getPrice();
+        boolean active = product.isActive();
 
         List<Product> products = findAll();
         products
                 .stream()
                 .filter(x -> x.getId() == id)
-                .forEach(x -> x.setPrice(newPrice));
+                .forEach(x -> {
+                    x.setPrice(newPrice);
+                    x.setActive(active);
+                });
         mapper.writeValue(database, products);
     }
 
