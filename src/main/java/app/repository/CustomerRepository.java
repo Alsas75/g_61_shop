@@ -33,8 +33,8 @@ public class CustomerRepository {
         List<Customer> customers = findAll();
 
         if (!customers.isEmpty()) {
-            Customer lastCustomers = customers.get(customers.size() - 1);
-            maxId = lastCustomers.getId();
+            Customer lastCustomer = customers.get(customers.size() - 1);
+            maxId = lastCustomer.getId();
         }
     }
 
@@ -43,7 +43,7 @@ public class CustomerRepository {
         customer.setId(++maxId);
         List<Customer> customers = findAll();
         customers.add(customer);
-        mapper.writeValue(database, customer);
+        mapper.writeValue(database, customers);
         return customer;
     }
 
@@ -81,7 +81,9 @@ public class CustomerRepository {
                 .forEach(x -> {
                     x.setName(newName);
                     x.setActive(active);
-                    x.setProducts(products);
+                    if (!products.isEmpty()) {
+                        x.setProducts(products);
+                    }
                 });
         mapper.writeValue(database, customers);
     }

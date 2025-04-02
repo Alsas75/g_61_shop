@@ -2,9 +2,7 @@ package client;
 
 import app.controller.CustomerController;
 import app.controller.ProductController;
-import app.domain.Product;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Client {
@@ -16,13 +14,14 @@ public class Client {
     public static void main(String[] args) {
 
         try {
-            //создать объекты контроллеров
+            // Создаём объекты контроллеров для взаимодействия с приложением
             productController = new ProductController();
             customerController = new CustomerController();
             scanner = new Scanner(System.in);
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+
         while (true) {
             System.out.println("Выберите желаемую операцию:");
             System.out.println("1 - операции с продуктами");
@@ -41,7 +40,7 @@ public class Client {
                 case "0":
                     return;
                 default:
-                    System.out.println("Не корректный ввод!");
+                    System.out.println("Некорректный ввод!");
                     break;
             }
         }
@@ -94,7 +93,7 @@ public class Client {
                         productController.deleteById(id);
                         break;
                     case "6":
-                        System.out.println("Введите наименование продукта");
+                        System.out.println("Введите название продукта");
                         title = scanner.nextLine();
                         productController.deleteByTitle(title);
                         break;
@@ -111,15 +110,15 @@ public class Client {
                                 productController.getActiveProductsTotalCost());
                         break;
                     case "10":
-                        System.out.println("Средняя стоимость продуктов - " +
+                        System.out.println("Средняя стоимость продукта - " +
                                 productController.getActiveProductsAveragePrice());
                         break;
                     case "0":
                         return;
                     default:
-                        System.out.println("Некорректный ввод");
+                        System.out.println("Некорректный ввод!");
+                        break;
                 }
-
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
@@ -149,7 +148,7 @@ public class Client {
 
                 switch (input) {
                     case "1":
-                        System.out.println("Введите имя покупателя!");
+                        System.out.println("Введите имя покупателя");
                         String name = scanner.nextLine();
                         System.out.println(customerController.save(name));
                         break;
@@ -164,7 +163,7 @@ public class Client {
                     case "4":
                         System.out.println("Введите идентификатор");
                         id = Integer.parseInt(scanner.nextLine());
-                        System.out.println("Введите новое имя покупателя!");
+                        System.out.println("Введите новое имя покупателя");
                         name = scanner.nextLine();
                         customerController.update(id, name);
                         break;
@@ -174,7 +173,7 @@ public class Client {
                         customerController.deleteById(id);
                         break;
                     case "6":
-                        System.out.println("Введите имя покупателя!");
+                        System.out.println("Введите имя покупателя");
                         name = scanner.nextLine();
                         customerController.deleteByName(name);
                         break;
@@ -184,7 +183,7 @@ public class Client {
                         customerController.restoreById(id);
                         break;
                     case "8":
-                        System.out.println("Количество покупателей - " + customerController.getActiveCustomersCount());
+                        System.out.println("Количество покупателей - " + customerController.getActiveCustomersNumber());
                         break;
                     case "9":
                         System.out.println("Введите идентификатор");
@@ -195,21 +194,21 @@ public class Client {
                     case "10":
                         System.out.println("Введите идентификатор");
                         id = Integer.parseInt(scanner.nextLine());
-                        System.out.println("Средняя цена продуктов в корзине - " +
+                        System.out.println("Средняя цена продукта в корзине - " +
                                 customerController.getCustomersCartAveragePrice(id));
                         break;
                     case "11":
                         System.out.println("Введите идентификатор покупателя");
                         int customerId = Integer.parseInt(scanner.nextLine());
                         System.out.println("Введите идентификатор продукта");
-                        int productId =  Integer.parseInt(scanner.nextLine());
+                        int productId = Integer.parseInt(scanner.nextLine());
                         customerController.addProductToCustomersCart(customerId, productId);
                         break;
                     case "12":
                         System.out.println("Введите идентификатор покупателя");
                         customerId = Integer.parseInt(scanner.nextLine());
                         System.out.println("Введите идентификатор продукта");
-                        productId =  Integer.parseInt(scanner.nextLine());
+                        productId = Integer.parseInt(scanner.nextLine());
                         customerController.removeProductFromCustomersCart(customerId, productId);
                         break;
                     case "13":
@@ -218,19 +217,14 @@ public class Client {
                         customerController.clearCustomersCart(id);
                         break;
                     case "0":
-                        break;
+                        return;
                     default:
                         System.out.println("Некорректный ввод!");
                         break;
                 }
-
-
-
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
         }
-
     }
 }
-

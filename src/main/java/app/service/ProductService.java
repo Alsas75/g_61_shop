@@ -7,22 +7,30 @@ import app.exceptions.ProductUpdateException;
 import app.repository.ProductRepository;
 
 import java.io.IOException;
-import java.nio.file.ProviderNotFoundException;
 import java.util.List;
 
 /*
-3-ий слой приложения
+Сервисы - это третий слой приложения.
+Сервисы содержат всю бизнес-логику, то есть
+тот код, который и решает бизнес-задачи, ради которых
+приложение и создавалось.
+Сервис не должен обращаться в базу данных напрямую, вместо
+этого он должен вызывать соответствующие методы репозитория.
  */
 public class ProductService {
 
+    /*
+    Это поле с объектом репозитория нужно для того, чтобы код сервиса
+    мог обращаться к объекту репозитория и вызывать у него методы
+    для взаимодействия с базой данных.
+     */
     private final ProductRepository repository;
 
     public ProductService() throws IOException {
         repository = new ProductRepository();
     }
 
-    //    Сохранить продукт в базе данных
-//    (при сохранении продукт автоматически считается активным).
+    //    Сохранить продукт в базе данных (при сохранении продукт автоматически считается активным).
     public Product save(Product product) throws ProductSaveException, IOException {
         if (product == null) {
             throw new ProductSaveException("Продукт не может быть null");
@@ -71,6 +79,7 @@ public class ProductService {
             throw new ProductUpdateException("Цена продукта должна быть положительной");
         }
 
+        product.setActive(true);
         repository.update(product);
     }
 
@@ -79,18 +88,17 @@ public class ProductService {
         Product product = getActiveProductById(id);
         product.setActive(false);
         repository.update(product);
-        //getActiveProductById(id).setActive(false);
     }
 
     //    Удалить продукт из базы данных по его наименованию.
-    public void deleteByTitle(String title) throws IOException, ProviderNotFoundException {
+    public void deleteByTitle(String title) throws IOException, ProductNotFoundException {
         Product product = getAllActiveProducts()
                 .stream()
                 .filter(x -> x.getTitle().equals(title))
                 .peek(x -> x.setActive(false))
                 .findFirst()
                 .orElseThrow(
-                        () -> new ProviderNotFoundException(title)
+                        () -> new ProductNotFoundException(title)
                 );
         repository.update(product);
     }

@@ -49,7 +49,7 @@ public class CustomerController {
     }
 
     //  Удалить покупателя из базы данных по его имени.
-    public void deleteByName(String name) throws IOException {
+    public void deleteByName(String name) throws IOException, CustomerNotFoundException {
         service.deleteByName(name);
     }
 
